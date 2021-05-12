@@ -25,12 +25,17 @@ console.log(jsonData.site);
     await page.waitForSelector('.login-btn2');
     await page.click('.login-btn2');
 
-    // await page.waitForTimeout(4000);
     // 커뮤니티 선택
     await page.waitForSelector('#toplogo');
-    // await page.click('a[href="/bbs/board.php?bo_table=b001"]');
-    // await page.click('#3g');
-    // await page.click('a[href="./write.php?bo_table=com25"]');
+    await page.click('#gnb4 > li > span > a[href="/bbs/board.php?bo_table=b001"]');
+
+    let left_menu = '#leftmenu a[href="/bbs/board.php?bo_table=com25"]';
+    await page.waitForSelector(left_menu);
+    await page.click(left_menu);
+
+    let btn_write = 'a[href="./write.php?bo_table=com25"]';
+    await page.waitForSelector(btn_write);
+    await page.click(btn_write);
 
     // 위와 마찬가지로 버튼의 classname이나 id 값을 넣는다.
 
