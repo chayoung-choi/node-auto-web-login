@@ -37,8 +37,11 @@ console.log(jsonData.site);
     await page.waitForSelector(btn_write);
     await page.click(btn_write);
 
-    // 위와 마찬가지로 버튼의 classname이나 id 값을 넣는다.
-
+    let write_contents = '[name="wr_subject"]';
+    await page.waitForSelector(write_contents);
+    await page.type(write_contents, "출첵");
+    await page.type('#login_pw', "출석체크입니다~~~~");
+    await page.click("#submit_img");
 
     // 로그인 후 새로운 페이지로 넘어갈 때 자연스럽게 넘겨주는 함수이다.
     // await page.waitForNavigation();
