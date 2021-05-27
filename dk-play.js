@@ -9,13 +9,15 @@ const siteName = "dk-play";
     const data = jsonData[siteName];
     console.log("START] " + data.site);
 
-    let btnId = "";
+    let btnId, mode = "";
     if (CommonUtils.isEqualCurrentHoursOfDate(8)) {
         // 출근
         btnId = "#workIn";
+        mode = "on";
     } else if (CommonUtils.isEqualCurrentHoursOfDate(18)){
         // 퇴근
         btnId = "#workOut";
+        mode = "off";
     } else {
         // 시간 외 접근
         return;
@@ -48,6 +50,15 @@ const siteName = "dk-play";
 
     await page.waitForTimeout(5000);
 
+    if (mode === "off"){
+        try {
+            // 출석체크한 경우만 실행
+            let state = await page.$eval("#workIn.off", (data) => data);
+        } catch (e){
+            await browser.close();
+            return;
+        }
+    }
     await page.waitForSelector(btnId);
     await page.click(btnId);
     console.log("END] " + data.site);
