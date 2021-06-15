@@ -15,7 +15,7 @@ const CommonUtils = {
      * @param {int} max
      * @return {int} 랜덤값
      */
-    getRandomBetweenMaxAndMin : (min, max) => {
+    getRandomBetweenMinAndMax : (min, max) => {
         return Math.floor(Math.random() * (max - min)) + min;
     },
 

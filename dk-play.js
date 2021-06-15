@@ -20,14 +20,14 @@ const siteName = "dk-play";
         mode = "off";
     } else {
         // 시간 외 접근
+        await browser.close();
         return;
     }
 
     // 1초 ~ 3분 사이 랜덤
     const min = 1;
     const max = 180;
-    const M = CommonUtils.getRandomBetweenMaxAndMin(1, 180);
-    console.log(M/60);
+    const M = CommonUtils.getRandomBetweenMinAndMax(min, max);
 
     // launch 메서드는 chrome을 실행시킴. headless는 ui를 제공하는지 안하는지 여부임. false로 해야 ui가 뜨고 아니면 백그라운드에서만 켜짐
     const browser = await puppeteer.launch({headless: false, defaultViewport: null});
@@ -49,7 +49,6 @@ const siteName = "dk-play";
     await page.click('#main-menu [title="근태관리"]');
 
     await page.waitForTimeout(5000);
-
     if (mode === "off"){
         try {
             // 출석체크한 경우만 실행
