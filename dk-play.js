@@ -3,11 +3,19 @@ const CommonUtils = require('./CommonUtils');
 const fs = require('fs');
 const jsonFile = fs.readFileSync('./config.json', 'utf8');
 const jsonData = JSON.parse(jsonFile);
-const siteName = "dk-play";
+const SITE_NAME = "dk-play";
 
 (async () => {
-    const data = jsonData[siteName];
-    console.log("START] " + data.site);
+
+    const config = jsonData[SITE_NAME];
+
+    const lastRunTime = CommonUtils.getLastRunTime(config.log_file_path);
+
+    // 시간 외 접근
+    if (!CommonUtils.checkRunTime(config.run_time, lastRunTime)) {
+        console.log("실행 시간이 아닙니다.");
+        return;
+    }
 
     let btnId, mode = "";
     if (CommonUtils.isEqualCurrentHoursOfDate(8)) {
@@ -18,15 +26,13 @@ const siteName = "dk-play";
         // 퇴근
         btnId = "#workOut";
         mode = "off";
-    } else {
-        // 시간 외 접근
-        await browser.close();
-        return;
     }
 
-    // 1초 ~ 3분 사이 랜덤
+    console.log("실행을 시작합니다.", mode);
+
+    // 1초 ~ 2분 사이 랜덤
     const min = 1;
-    const max = 180;
+    const max = 120;
     const M = CommonUtils.getRandomBetweenMinAndMax(min, max);
 
     // launch 메서드는 chrome을 실행시킴. headless는 ui를 제공하는지 안하는지 여부임. false로 해야 ui가 뜨고 아니면 백그라운드에서만 켜짐
@@ -36,13 +42,13 @@ const siteName = "dk-play";
     const page = await browser.newPage();
 
     // goto는 url로 이동하는 메서드
-    await page.goto(data.url);
+    await page.goto(config.url);
 
     // 랜덤으로 접근하기 위한 딜레이
     await page.waitForTimeout(M*1000);
 
-    await page.type('#username', data.id);
-    await page.type('#password', data.pw);
+    await page.type('#username', config.id);
+    await page.type('#password', config.pw);
     await page.click('#login_submit');
 
     await page.waitForSelector('.profile');
@@ -60,6 +66,6 @@ const siteName = "dk-play";
     }
     await page.waitForSelector(btnId);
     await page.click(btnId);
-    console.log("END] " + data.site);
+    console.log("END] " + config.site);
     await browser.close();
 })();
