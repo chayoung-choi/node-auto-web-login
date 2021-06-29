@@ -28,6 +28,8 @@ const SITE_NAME = "dk-play";
         mode = "off";
     }
 
+    // 완료 로그
+    fs.appendFileSync(config.log_file_path, (new Date()).toISOString() +"|"+mode +  "\n");
     console.log("실행을 시작합니다.", mode);
 
     // 1초 ~ 2분 사이 랜덤
@@ -64,6 +66,10 @@ const SITE_NAME = "dk-play";
             return;
         }
     }
+
+    // 완료 로그
+    fs.appendFileSync(config.log_file_path, (new Date()).toISOString() + "\n");
+
     await page.waitForSelector(btnId);
     await page.click(btnId);
     console.log("END] " + config.site);

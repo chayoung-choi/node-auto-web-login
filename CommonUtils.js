@@ -62,19 +62,22 @@ const CommonUtils = {
         const currentHours = (new Date()).getHours();
         // 실행 설정 시간이 아닌 경우
         if (!hoursList.includes(currentHours)) {
+            console.log("#1 실행 설정 시간이 아닙니다.", currentHours, hoursList);
             return false;
         }
 
         // 최초 실행인 경우
         if (lastDate == null){
+            console.log("#2 최초 실행");
             return true;
         }
 
         const diffLastDate = this.getDiffCurrentDate(lastDate, 'h');
-        // 최근 1시간 이내에 실행된 경우
+        // 최근 1시간 이내에 실행 이력 없음
         if (diffLastDate < -1){
             return true;
         }
+        console.log("#3 최근 1시간 이내에 실행되었습니다.");
         return false;
     },
 
@@ -86,9 +89,10 @@ const CommonUtils = {
     getLastRunTime : function (filePath) {
         const logFile = fs.readFileSync(filePath, 'utf8');
         const log = logFile.split("\n");
+
         let data;
         for (let i=log.length-1; i>=0; i--){
-            data = log[i];
+            data = log[i].split("|")[0];
             if (data && data.trim() != ""){
                 return new Date(data);
                 break;
