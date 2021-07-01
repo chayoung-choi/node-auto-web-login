@@ -66,7 +66,7 @@ const SITE_NAME = "bbasak";
     await page.click("#submit_img");
 
     // 완료 로그
-    fs.appendFileSync(config.log_file_path, (new Date()).toISOString() + "\n");
+    fs.appendFileSync(config.log_file_path, (new Date()).toISOString() +"|"+(new Date()).toLocaleString()+ "\n");
 
     // 로그인 후 새로운 페이지로 넘어갈 때 자연스럽게 넘겨주는 함수이다.
     await page.waitForNavigation();

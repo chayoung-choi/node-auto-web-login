@@ -74,6 +74,7 @@ const CommonUtils = {
 
         const diffLastDate = this.getDiffCurrentDate(lastDate, 'h');
         // 최근 1시간 이내에 실행 이력 없음
+        console.log("diffLastDate", diffLastDate, lastDate);
         if (diffLastDate < -1){
             return true;
         }
