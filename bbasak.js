@@ -18,7 +18,7 @@ const SITE_NAME = "bbasak";
 
     // 1초 ~ 1분 사이 랜덤
     const min = 1;
-    const max = 60;
+    const max = 10;
     const M = CommonUtils.getRandomBetweenMinAndMax(min, max);
 
     // launch 메서드는 chrome을 실행시킴. headless는 ui를 제공하는지 안하는지 여부임. false로 해야 ui가 뜨고 아니면 백그라운드에서만 켜짐
