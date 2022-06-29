@@ -1,14 +1,16 @@
 # node-auto-web-login
 > puppeteer를 이용한 화면 자동 제어 Node.js 프로젝트 
 
-## config.js
+## config.json
 ```
 {
     "site-1": {
         "site": "site 이름",
         "url": "",
         "id": "",
-        "pw": ""
+        "pw": "",
+        "startHour": 13,
+        "endHour": 18
     },
     "site-2": {
         "site": "site 이름2",

@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^9.0.0",
+    "dayjs": "^1.11.3",
+    "puppeteer": "^9.1.1",
     "sanitize-html": "^2.3.3"
   }
 }

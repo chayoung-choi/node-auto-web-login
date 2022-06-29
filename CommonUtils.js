@@ -1,4 +1,5 @@
 const fs = require('fs');
+const dayjs = require("dayjs");
 const CommonUtils = {
 
     /**
@@ -44,12 +45,11 @@ const CommonUtils = {
 
     /**
      * 동일한 시간인지 체크
-     * @param {int} hours 시간(0~23)
+     * @param {int} hour 시간(0~23)
      * @return {boolean} true / false
      */
-    isEqualCurrentHoursOfDate : function (hours) {
-        const compareDate = new Date((new Date()).setHours(hours));
-        return this.getDiffCurrentDate(compareDate, 'h') === 0 ? true : false;
+    isEqualCurrentHourOfDate : function (hour) {
+        return dayjs().isSame(dayjs().hour(hour), 'hour')
     },
 
     /**
