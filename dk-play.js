@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const CommonUtils = require('./CommonUtils');
 const fs = require('fs');
+const dayjs = require("dayjs");
 const jsonFile = fs.readFileSync('./config.json', 'utf8');
 const jsonData = JSON.parse(jsonFile);
 const SITE_NAME = "dk-play";
@@ -18,11 +19,11 @@ const SITE_NAME = "dk-play";
     }
 
     let btnId, mode = "";
-    if (CommonUtils.isEqualCurrentHoursOfDate(8)) {
+    if (CommonUtils.isEqualCurrentHourOfDate(8)) {
         // 출근
         btnId = "#workIn";
         mode = "on";
-    } else if (CommonUtils.isEqualCurrentHoursOfDate(18)){
+    } else if (CommonUtils.isEqualCurrentHourOfDate(18)){
         // 퇴근
         btnId = "#workOut";
         mode = "off";
@@ -66,9 +67,9 @@ const SITE_NAME = "dk-play";
     }
 
     await page.waitForSelector(btnId);
-    await page.click(btnId);
+    // await page.click(btnId);
     // 완료 로그
-    fs.appendFileSync(config.log_file_path, (new Date()).toISOString() +"|"+(new Date()).toLocaleString()+"|"+mode +  "\n");
+    fs.appendFileSync(config.log_file_path, dayjs().format('YYYY-MM-DD HH:mm:ss') + "|"+mode +  "\n");
     console.log("END] " + config.site);
     await browser.close();
 })();
