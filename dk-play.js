@@ -19,11 +19,11 @@ const SITE_NAME = "dk-play";
     }
 
     let btnId, mode = "";
-    if (CommonUtils.isEqualCurrentHourOfDate(8)) {
+    if (CommonUtils.isEqualCurrentHourOfDate(config.start_hour)) {
         // 출근
         btnId = "#workIn";
         mode = "on";
-    } else if (CommonUtils.isEqualCurrentHourOfDate(18)){
+    } else if (CommonUtils.isEqualCurrentHourOfDate(config.end_hour)){
         // 퇴근
         btnId = "#workOut";
         mode = "off";
@@ -67,7 +67,7 @@ const SITE_NAME = "dk-play";
     }
 
     await page.waitForSelector(btnId);
-    // await page.click(btnId);
+    await page.click(btnId);
     // 완료 로그
     fs.appendFileSync(config.log_file_path, dayjs().format('YYYY-MM-DD HH:mm:ss') + "|"+mode +  "\n");
     console.log("END] " + config.site);
