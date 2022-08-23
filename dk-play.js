@@ -31,9 +31,9 @@ const SITE_NAME = "dk-play";
 
     console.log("실행을 시작합니다.", mode);
 
-    // 1초 ~ 30초 사이 랜덤
+    // 1초 ~ 5분 사이 랜덤
     const min = 1;
-    const max = 30;
+    const max = 300;
     const M = CommonUtils.getRandomBetweenMinAndMax(min, max);
 
     // launch 메서드는 chrome을 실행시킴. headless는 ui를 제공하는지 안하는지 여부임. false로 해야 ui가 뜨고 아니면 백그라운드에서만 켜짐
@@ -66,8 +66,12 @@ const SITE_NAME = "dk-play";
         }
     }
 
-    await page.waitForSelector(btnId);
-    await page.click(btnId);
+    // 오랜 지연 발생 방지
+    if (CommonUtils.isEqualCurrentHourOfDate(config.start_hour) || CommonUtils.isEqualCurrentHourOfDate(config.end_hour)) {
+        await page.waitForSelector(btnId);
+        await page.click(btnId);
+    }
+
     // 완료 로그
     fs.appendFileSync(config.log_file_path, dayjs().format('YYYY-MM-DD HH:mm:ss') + "|"+mode +  "\n");
     console.log("END] " + config.site);
