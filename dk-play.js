@@ -4,17 +4,22 @@ const fs = require('fs');
 const dayjs = require("dayjs");
 const jsonFile = fs.readFileSync('./config.json', 'utf8');
 const jsonData = JSON.parse(jsonFile);
-const SITE_NAME = "dk-play";
+const { Console } = require("console");
 
+const SITE_NAME = "dk-play";
+const looger = new Console({
+    stdout: fs.createWriteStream("./dk/stdout.log"),
+    stderr: fs.createWriteStream("./dk/stderr.log"),
+});
 (async () => {
 
     const config = jsonData[SITE_NAME];
 
     const lastRunTime = CommonUtils.getLastRunTime(config.log_file_path);
-
+    looger.log("START] ", (new Date()).toLocaleString());
     // 시간 외 접근
     if (!CommonUtils.checkRunTime(config.run_time, lastRunTime)) {
-        console.log("실행 시간이 아닙니다.");
+        looger.log("실행 시간이 아닙니다.");
         return;
     }
 
@@ -29,7 +34,7 @@ const SITE_NAME = "dk-play";
         mode = "off";
     }
 
-    console.log("실행을 시작합니다.", mode);
+    looger.log("실행을 시작합니다.", mode);
 
     // 1초 ~ 5분 사이 랜덤
     const min = 1;
@@ -74,6 +79,6 @@ const SITE_NAME = "dk-play";
 
     // 완료 로그
     fs.appendFileSync(config.log_file_path, dayjs().format('YYYY-MM-DD HH:mm:ss') + "|"+mode +  "\n");
-    console.log("END] " + config.site);
+    looger.log("END] " + config.site);
     await browser.close();
 })();

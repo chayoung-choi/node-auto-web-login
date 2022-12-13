@@ -10,7 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "console": "^0.7.2",
+    "console-stamp": "^3.0.6",
     "dayjs": "^1.11.3",
+    "fs": "^0.0.1-security",
     "puppeteer": "^9.1.1",
     "sanitize-html": "^2.3.3"
   }
